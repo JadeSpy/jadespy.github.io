@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oregon Food Connection Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --forest:   #1a3a2a;
+      --pine:     #2d5e3e;
+      --sage:     #5c8a6a;
+      --moss:     #8ab89a;
+      --cream:    #f5f0e8;
+      --wheat:    #e8dcc8;
+      --amber:    #c8873a;
+      --rust:     #a85a28;
+      --text:     #1a2218;
+      --muted:    #5a6854;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      background: var(--forest);
+      color: var(--cream);
+      padding: 0;
+      overflow: hidden;
+      min-height: 92px;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    .logo-block {}
+    .logo-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 4px;
+    }
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--cream);
+    }
+    .logo-name span { color: var(--amber); }
+
+    .wip-badge {
+      background: var(--amber);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--forest);
+      color: var(--cream);
+      padding: 72px 32px 96px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(90,140,106,.25) 0%, transparent 65%),
+                  radial-gradient(ellipse at 10% 90%, rgba(200,135,58,.12) 0%, transparent 50%);
+    }
+    /* decorative rings */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -120px;
+      top: -80px;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 80px solid rgba(255,255,255,.03);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6vw, 70px);
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--amber);
+    }
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 520px;
+      color: rgba(245,240,232,.75);
+      margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--rust); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      border: 1.5px solid rgba(245,240,232,.3);
+    }
+    .btn-outline:hover { border-color: var(--moss); color: var(--moss); }
+
+    /* ── DIVIDER WAVE ── */
+    .wave {
+      display: block;
+      background: var(--forest);
+      line-height: 0;
+    }
+    .wave svg { display: block; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 80px 32px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--forest);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 580px;
+      margin-bottom: 48px;
+    }
+
+    /* ── QUICK HELP CARDS ── */
+    .quick-help { background: var(--cream); }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1.5px solid var(--wheat);
+      border-radius: 12px;
+      padding: 28px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(26,58,42,.1);
+      border-color: var(--moss);
+    }
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .card-icon.green  { background: rgba(90,140,106,.15); }
+    .card-icon.amber  { background: rgba(200,135,58,.15); }
+    .card-icon.blue   { background: rgba(58,100,200,.1); }
+    .card-icon.red    { background: rgba(200,58,58,.1); }
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--forest);
+    }
+    .card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+      flex: 1;
+    }
+    .card-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--pine);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .card-link::after { content: '→'; transition: transform .15s; }
+    .card:hover .card-link::after { transform: translateX(3px); }
+
+    /* ── RESOURCES SECTION ── */
+    .resources { background: var(--wheat); }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 680px) { .resources-grid { grid-template-columns: 1fr; } }
+    .resource-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      border: 1.5px solid transparent;
+      transition: border-color .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .resource-item:hover { border-color: var(--sage); }
+    .resource-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--amber);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .resource-dot.pine { background: var(--pine); }
+    .resource-dot.moss { background: var(--moss); }
+    .resource-text h4 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 4px;
+    }
+    .resource-text p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .resource-text .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 6px;
+    }
+
+    /* ── TUTORIALS SECTION ── */
+    .tutorials { background: var(--cream); }
+    .tutorials-list { display: flex; flex-direction: column; gap: 16px; }
+    .tutorial-row {
+      background: #fff;
+      border: 1.5px solid var(--wheat);
+      border-radius: 10px;
+      padding: 22px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .tutorial-row:hover {
+      border-color: var(--moss);
+      box-shadow: 0 4px 16px rgba(26,58,42,.06);
+    }
+    .tutorial-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--wheat);
+      flex-shrink: 0;
+      min-width: 40px;
+      line-height: 1;
+    }
+    .tutorial-body { flex: 1; }
+    .tutorial-body h4 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 4px;
+    }
+    .tutorial-body p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .tutorial-chip {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(90,140,106,.12);
+      color: var(--pine);
+      flex-shrink: 0;
+    }
+    .tutorial-chip.soon {
+      background: rgba(200,135,58,.1);
+      color: var(--rust);
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--pine);
+      color: var(--cream);
+      padding: 64px 32px;
+    }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (max-width: 720px) { .about-inner { grid-template-columns: 1fr; gap: 32px; } }
+    .about-copy .section-label { color: var(--moss); }
+    .about-copy h2 { color: var(--cream); margin-bottom: 16px; }
+    .about-copy p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(245,240,232,.75);
+      margin-bottom: 14px;
+    }
+    .about-copy p:last-child { margin-bottom: 0; }
+    .about-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label { font-size: 13px; color: rgba(245,240,232,.6); line-height: 1.4; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter { background: var(--cream); }
+    .newsletter-box {
+      background: var(--forest);
+      border-radius: 16px;
+      padding: 56px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-box::before {
+      content: '';
+      position: absolute;
+      right: -60px;
+      bottom: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 50px solid rgba(255,255,255,.04);
+    }
+    @media (max-width: 720px) {
+      .newsletter-box { grid-template-columns: 1fr; padding: 36px 28px; }
+    }
+    .newsletter-copy .section-label { color: var(--moss); }
+    .newsletter-copy h2 { color: var(--cream); margin-bottom: 10px; }
+    .newsletter-copy p { font-size: 15px; color: rgba(245,240,232,.7); line-height: 1.6; }
+    .newsletter-form { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+    .newsletter-form input {
+      padding: 14px 18px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07);
+      color: var(--cream);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .newsletter-form input::placeholder { color: rgba(245,240,232,.35); }
+    .newsletter-form input:focus { border-color: var(--moss); }
+    .newsletter-form .btn-primary { align-self: flex-start; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest);
+      color: rgba(245,240,232,.55);
+      padding: 40px 32px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--cream);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      color: rgba(245,240,232,.45);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-links a:hover { color: var(--moss); }
+    .footer-note { font-size: 12px; width: 100%; text-align: center; margin-top: 8px; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 600px) {
+      .header-inner { padding: 20px; }
+      h1 { font-size: 32px; }
+      .hero { padding: 52px 20px 72px; }
+      section { padding: 56px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-tag">Oregon Food Connection Network</div>
+        <div class="logo-name">OFCN <span>·</span> Oregon</div>
+      </div>
+      <span class="wip-badge">Work in Progress</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Serving Oregonians</div>
+      <h1>Find <em>food help</em><br>anywhere in Oregon</h1>
+      <p class="hero-desc">
+        Oregon Food Connection Network is a free, community-built resource helping Oregonians navigate food assistance programs, local pantries, SNAP, and more — one step at a time.
+      </p>
+      <div class="hero-actions">
+        <a href="#quick-help" class="btn btn-primary">Find Resources Near You</a>
+        <a href="#tutorials" class="btn btn-outline">Step-by-Step Guides</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave transition -->
+  <div class="wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="48">
+      <path d="M0 48V0C240 40 480 48 720 32C960 16 1200 0 1440 24V48H0Z" fill="#1a3a2a"/>
+    </svg>
+  </div>
+
+  <!-- QUICK HELP -->
+  <section class="quick-help" id="quick-help">
+    <div class="section-inner">
+      <p class="section-label">Start Here</p>
+      <h2>What do you need help with?</h2>
+      <p class="section-desc">Pick the situation that best matches yours. Each path will walk you through Oregon-specific resources and how to access them.</p>
+
+      <div class="cards-grid">
+        <a href="#resources" class="card fade-up">
+          <div class="card-icon green">🥦</div>
+          <h3>Food Pantries & Banks</h3>
+          <p>Find free food near you through Oregon's network of food banks, pantries, and community distribution sites.</p>
+          <span class="card-link">Browse locations</span>
+        </a>
+        <a href="#resources" class="card fade-up" style="transition-delay:.08s">
+          <div class="card-icon amber">📋</div>
+          <h3>SNAP Benefits</h3>
+          <p>Oregon's food stamp program (called SNAP) can help cover grocery costs. Learn how to check eligibility and apply.</p>
+          <span class="card-link">Learn how to apply</span>
+        </a>
+        <a href="#resources" class="card fade-up" style="transition-delay:.16s">
+          <div class="card-icon blue">🍽️</div>
+          <h3>Free Meals Programs</h3>
+          <p>Hot meals and meal sites for seniors, children, and anyone in need — at no cost, no questions asked.</p>
+          <span class="card-link">Find meal sites</span>
+        </a>
+        <a href="#resources" class="card fade-up" style="transition-delay:.24s">
+          <div class="card-icon red">🚨</div>
+          <h3>Emergency Food Help</h3>
+          <p>Need food today? These programs can help you right away without waiting for an application to process.</p>
+          <span class="card-link">Get immediate help</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="resources" id="resources">
+    <div class="section-inner">
+      <p class="section-label">Trusted Links</p>
+      <h2>Oregon food resources</h2>
+      <p class="section-desc">Verified programs and organizations across the state. These are real, active resources you can contact directly.</p>
+
+      <div class="resources-grid fade-up">
+
+        <a href="https://oregonfoodbank.org" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot"></div>
+          <div class="resource-text">
+            <span class="tag">Food Bank</span>
+            <h4>Oregon Food Bank</h4>
+            <p>Oregon's largest hunger-relief organization with a network of pantries statewide. Use their locator to find the nearest site.</p>
+          </div>
+        </a>
+
+        <a href="https://govstatus.egov.com/or-dhs-benefits" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot pine"></div>
+          <div class="resource-text">
+            <span class="tag">Benefits</span>
+            <h4>Oregon ONE System (SNAP)</h4>
+            <p>Apply online for SNAP (food stamps), cash assistance, and other benefits through Oregon DHS.</p>
+          </div>
+        </a>
+
+        <a href="https://www.211info.org" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot amber"></div>
+          <div class="resource-text">
+            <span class="tag">Hotline</span>
+            <h4>211info Oregon</h4>
+            <p>Call or text 211 anytime to be connected with local food, shelter, and emergency services in your area.</p>
+          </div>
+        </a>
+
+        <a href="https://www.oregon.gov/ode/students-and-family/nutritionprograms/Pages/SummerMeals.aspx" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot moss"></div>
+          <div class="resource-text">
+            <span class="tag">Children</span>
+            <h4>Summer Meals for Kids</h4>
+            <p>Free summer meals for children 18 and under at sites across Oregon when school is out.</p>
+          </div>
+        </a>
+
+        <a href="https://www.oregon.gov/oha/PH/ABOUT/ORGANIZATION/OPHP/Pages/EFAP.aspx" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot"></div>
+          <div class="resource-text">
+            <span class="tag">Emergency</span>
+            <h4>Emergency Food Assistance (TEFAP)</h4>
+            <p>USDA-provided food distributed through Oregon's emergency food network at no cost.</p>
+          </div>
+        </a>
+
+        <a href="https://www.oregon.gov/dhs/SENIORS-DISABILITIES/SPPD/Pages/Meal-Programs.aspx" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot pine"></div>
+          <div class="resource-text">
+            <span class="tag">Seniors</span>
+            <h4>Oregon Senior Meal Programs</h4>
+            <p>Home-delivered meals and congregate dining options for older adults through Oregon DHS.</p>
+          </div>
+        </a>
+
+        <a href="https://www.fns.usda.gov/wic" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot amber"></div>
+          <div class="resource-text">
+            <span class="tag">Families</span>
+            <h4>WIC — Women, Infants & Children</h4>
+            <p>Nutrition support for pregnant women, new mothers, and children under 5. Oregon WIC clinics are free to visit.</p>
+          </div>
+        </a>
+
+        <a href="https://www.needhelppayingbills.com/html/oregon_food_banks.html" target="_blank" rel="noopener" class="resource-item">
+          <div class="resource-dot moss"></div>
+          <div class="resource-text">
+            <span class="tag">Directory</span>
+            <h4>Oregon Food Bank Directory</h4>
+            <p>A county-by-county directory of food banks, soup kitchens, and food pantries across the state.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TUTORIALS -->
+  <section class="tutorials" id="tutorials">
+    <div class="section-inner">
+      <p class="section-label">Step-by-Step Guides</p>
+      <h2>How-to tutorials</h2>
+      <p class="section-desc">Simple walkthroughs for navigating Oregon's food programs, written in plain language for anyone to follow.</p>
+
+      <div class="tutorials-list fade-up">
+
+        <div class="tutorial-row">
+          <div class="tutorial-num">01</div>
+          <div class="tutorial-body">
+            <h4>How to Apply for SNAP in Oregon</h4>
+            <p>A step-by-step walkthrough of the Oregon ONE online application — what info you'll need, how long it takes, and what happens next.</p>
+          </div>
+          <span class="tutorial-chip soon">Coming Soon</span>
+        </div>
+
+        <div class="tutorial-row">
+          <div class="tutorial-num">02</div>
+          <div class="tutorial-body">
+            <h4>Finding Your Nearest Food Pantry</h4>
+            <p>How to use the Oregon Food Bank locator and what to expect on your first visit — no ID or paperwork required at most sites.</p>
+          </div>
+          <span class="tutorial-chip soon">Coming Soon</span>
+        </div>
+
+        <div class="tutorial-row">
+          <div class="tutorial-num">03</div>
+          <div class="tutorial-body">
+            <h4>Calling 211 — What to Say and What to Expect</h4>
+            <p>A simple script and guide for calling Oregon's 211 line if talking on the phone feels intimidating.</p>
+          </div>
+          <span class="tutorial-chip soon">Coming Soon</span>
+        </div>
+
+        <div class="tutorial-row">
+          <div class="tutorial-num">04</div>
+          <div class="tutorial-body">
+            <h4>Enrolling a Child in School Meals</h4>
+            <p>How to sign up for free or reduced-price school breakfast and lunch through Oregon's program.</p>
+          </div>
+          <span class="tutorial-chip soon">Coming Soon</span>
+        </div>
+
+        <div class="tutorial-row">
+          <div class="tutorial-num">05</div>
+          <div class="tutorial-body">
+            <h4>Understanding Your SNAP EBT Card</h4>
+            <p>What you can buy, where you can use it, and how to check your balance — explained simply.</p>
+          </div>
+          <span class="tutorial-chip soon">Coming Soon</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <div class="about-strip">
+    <div class="about-inner">
+      <div class="about-copy fade-up">
+        <p class="section-label">About OFCN</p>
+        <h2>A community project for Oregonians</h2>
+        <p>Oregon Food Connection Network is a volunteer-run, nonprofit-in-progress building a single, easy-to-use hub for food access information across Oregon.</p>
+        <p>We are not a food bank or government agency — we're a connector. Our goal is to make it easier for people to find the help that already exists, without needing to know where to look.</p>
+        <p style="color: rgba(245,240,232,.5); font-size: 13px;">⚠️ This site is currently under construction. Resources are being verified and tutorials are being written. Check back soon.</p>
+      </div>
+      <div class="about-stat-grid fade-up">
+        <div class="stat-box">
+          <div class="stat-num">36</div>
+          <div class="stat-label">Oregon counties we aim to cover</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">1 in 8</div>
+          <div class="stat-label">Oregonians experience food insecurity</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Always free to use, forever</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">WIP</div>
+          <div class="stat-label">Site is actively being built</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="section-inner">
+      <div class="newsletter-box">
+        <div class="newsletter-copy">
+          <p class="section-label">Stay Updated</p>
+          <h2>Get notified when we launch</h2>
+          <p>Leave your email and we'll let you know when new tutorials and resources go live. No spam, ever.</p>
+        </div>
+        <form class="newsletter-form" onsubmit="handleSignup(event)">
+          <input type="text" placeholder="Your name (optional)" />
+          <input type="email" placeholder="Email address" required />
+          <button type="submit" class="btn btn-primary">Notify Me →</button>
+          <p id="signup-msg" style="font-size:13px; color: var(--moss); display:none;">Thanks! We'll be in touch.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Oregon Food Connection Network</div>
+      <div class="footer-links">
+        <a href="#quick-help">Resources</a>
+        <a href="#tutorials">Tutorials</a>
+        <a href="mailto:hello@oregonfoodconnection.org">Contact</a>
+      </div>
+      <p class="footer-note">This site is a work in progress. Information is provided for guidance only — always verify directly with the organization listed. © 2025 Oregon Food Connection Network.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Newsletter fake submit
+    function handleSignup(e) {
+      e.preventDefault();
+      const msg = document.getElementById('signup-msg');
+      msg.style.display = 'block';
+      e.target.querySelector('button').disabled = true;
+      e.target.querySelector('button').textContent = 'Signed up ✓';
+    }
+  </script>
+
+</body>
+</html>
